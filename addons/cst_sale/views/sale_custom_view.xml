@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<record id="sale_model_tree" model="ir.ui.view">
+    		<field name="name">QC Tree</field>
+    		<field name="model">qc.management.model</field>
+    		<field name="type">tree</field>
+    		<field name="arch" type="xml">
+        		<tree >
+            		<field name="nolot"/>
+            		<field name="customer_id"/>
+            		<field name="state"/>
+        		</tree>
+    		</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="sale_model_action">
+        	<field name="name">Service Form</field>
+        	<field name="type">ir.actions.act_window</field>
+         	<field name="res_model">qc.management.model</field>
+         	<field name="view_mode">tree,form</field>
+     	</record>
+	
+		<record id="sale_model_form_view" model="ir.ui.view">
+        	<field name="name">Sale Form</field>
+        	<field name="model">qc.management.model</field>
+        	<field name="type">form</field>
+        	<field name="arch" type="xml">
+        		<form>
+            		<header>
+                		<!-- tempatkan kode header seperti tombol dll disini -->
+                    	<field name="state" widget="statusbar" statusbar_visible="draft,in_progress,done,cancel"/>
+            		</header>
+            		<sheet>
+                			<!-- tempatkan kode yang berhubungan dengan input disini -->
+                		<div class="oe_title">
+                			<h1>
+                				<field name="nolot"/>
+                			</h1>
+                		</div>
+                 		<group>
+                    		<group>
+                    			<field name="product_id" widget="product_product_many2one"/>
+                        		<field name="customer_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}" options='{"always_reload": True}'/>
+                    		</group>
+                    		<group>
+                    			<field name="date_order"/>
+                    	    	<field name="batch" />
+                    	    	<field name="manufacture_id"/>
+                    		</group>
+                		</group>
+                		<notebook>
+                			<page string="Product Line">
+                				<field name="move_line" />
+                			</page>
+                		</notebook>
+            		</sheet>
+        		</form>
+        	</field>
+    	</record>
+		
+		<menuitem name="Quality Control"
+    		id="sale_menu_root"
+    		action="sale_model_action"
+    		sequence="15"/>
+	</data>
+</odoo>
