@@ -7,6 +7,7 @@
                 <t t-set="partner" t-value="o.partner_id or (o.move_lines and o.move_lines[0].partner_id) or False"/>
                 <t t-if="partner" name="partner_header">
                     <t t-set="address">
+                    	<p>Kepada :</p>
                         <div t-esc="partner"
                         t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True}'/>
                    </t>
@@ -155,8 +156,47 @@
                             </tbody>
                         </table>
                     </t>
+                    
+                    <div style="margin-top:100px;margin-left:100px;" class="row">
+                     	<div style="margin-right:50px;box-sizing:context-box;width:200px;height:130px;padding:10px;border:1px solid black" name="signature">
+                        	<div class="text-center">
+                            	<strong>Mengetahui</strong><hr></hr>
+                        	</div>
+                        	<div class="offset-8">
+                            	<br><br></br></br>
+                        	</div>
+                        	<div class="text-center">
+                            	
+                        	</div>
+                    	</div>
 
-                    <div t-if="o.signature" class="mt32 ml64 mr4" name="signature">
+                    	<div style="margin-right:50px;box-sizing:context-box;width:200px;height:130px;padding:10px;border:1px solid black" name="signature">
+                        	<div class="text-center">
+                            	<strong>Driver</strong><hr></hr>
+                        	</div>
+                        	<div class="offset-8">
+                            	<br><br></br></br>
+                        	</div>
+                        	<div class="text-center">
+                            	
+                        	</div>
+                    	</div>
+                    	
+                    	<div style="margin-right:50px;box-sizing:context-box;width:200px;height:130px;padding:10px;border:1px solid black" name="signature">
+                        	<div class="text-center">
+                            	<strong>Penerima</strong><hr></hr>
+                        	</div>
+                        	<div class="offset-8">
+                            	<br><br></br></br>
+                        	</div>
+                        	<div class="text-center">
+                            	
+                        	</div>
+                    	</div>
+                    </div>
+                   
+
+                    <!--<div t-if="o.signature" class="mt32 ml64 mr4" name="signature">
                         <div class="offset-8">
                             <strong>Signature</strong>
                         </div>
@@ -166,7 +206,7 @@
                         <div class="offset-8 text-center">
                             <p t-field="o.partner_id.name"/>
                         </div>
-                    </div>
+                    </div>  -->
                 </div>
             </t>
          </t>
