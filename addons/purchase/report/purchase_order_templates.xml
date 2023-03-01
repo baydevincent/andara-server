@@ -39,8 +39,12 @@
                     <strong>Order Date:</strong>
                     <p t-field="o.date_order" class="m-0"/>
                 </div>
+                <div t-if="o.date_order" class="col-3 bm-2">
+                    <strong>Rekening:</strong>
+                    <p t-field="o.rekening" class="m-0"/>
+                </div>
             </div>
-
+			<br></br>
             <table class="table table-sm o_main_table">
                 <thead>
                     <tr>
