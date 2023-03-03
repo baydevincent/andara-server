@@ -64,17 +64,17 @@ class Product(models.Model):
             position = 0  
             for send in list_mail:
                 queue = list_mail[position]                          
-                vals = {
+            vals = {
                     'subject': 'Andara Low Stock',
                     'body_html': template.body_html,
-                    'email_to': queue,
+                    'email_to': 'baydevincent@gmail.com',
                     'email_cc': '',
                     'auto_delete': False,
                     'email_from': 'baydevincent@gmail.com',
                     }
-                mail_id = self.env['mail.mail'].sudo().create(vals)
-                mail_id.sudo().send()
-                position = position + 1
+            mail_id = self.env['mail.mail'].sudo().create(vals)
+            mail_id.sudo().send()
+            position = position + 1
             # send_email         = mail_obj.template_obj.with_context(force_send=True).message_post_with_template(template_ids)
             template.body_html = default_body
             return True
