@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<record id="budget_model_tree" model="ir.ui.view">
+    		<field name="name">Andara Budgeting Documents</field>
+    		<field name="model">adr.budgeting</field>
+    		<field name="type">tree</field>
+    		<field name="arch" type="xml">
+        		<tree >
+            		<field name="name"/>
+            		<field name="responsible_id"/>
+            		<field name="state"/>
+        		</tree>
+    		</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="budget_model_action">
+        	<field name="name">Monthly Budgeting</field>
+        	<field name="type">ir.actions.act_window</field>
+         	<field name="res_model">adr.budgeting</field>
+         	<field name="view_mode">tree,form</field>
+     	</record>
+	
+		<record id="budget_model_form_view" model="ir.ui.view">
+        	<field name="name">Monthly Budgeting</field>
+        	<field name="model">adr.budgeting</field>
+        	<field name="type">form</field>
+        	<field name="arch" type="xml">
+        		<form>
+            		<header>
+                		<!-- tempatkan kode header seperti tombol dll disini -->
+                		<button name="lock_budget" string="Lock Budget" type="object" invisible="1"/>
+                		<button name="confirm_budget" string="Confirm" type="object" attrs="{'invisible': [('state', 'in', ['|','confirmed','done'])]}"/>
+                		<button name="set_draft" string="Set to Draft" type="object" attrs="{'invisible': [('state', 'in', ['|','draft','done'])]}"/>
+                		<button name="unlock_budget" string="Unlock Budget" type="object" invisible="1"/>
+                    	<field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancel"/>
+            		</header>
+            		<sheet>
+                			<!-- tempatkan kode yang berhubungan dengan input disini -->
+                		<div class="oe_title">
+                			<h1>
+                				<field name="name"/>
+                			</h1>
+                		</div>
+                 		<group>
+                    		<group>
+                        		<field name="responsible_id" widget="res_partner_many2one" options='{"always_reload": True}'/>
+                        		<field name="planned_expenses"/>
+                        		<field name="actual_expenses"/>
+                    		</group>
+                    		<group>
+                    			<field name="create_date"/>
+                    			<field name="validator"/>
+                    			<field name="planned_income"/>
+                    			<field name="actual_income"/> 
+                    			<br><br></br></br>
+                    			<button name="sum_planned_expenses" string="update value" type="object"/>  			              	    	
+                    		</group>
+                		</group>
+                		<notebook>
+                			<page string="Expenses">
+                				<field name="expenses_line">
+                					<tree editable="top">
+                						<field name="category"/>
+                						<field name="planned"/>
+                						<field name="actual"/>
+                						<field name="diff"/>
+                					</tree>
+                				</field>
+                			</page>
+                			<page string="Incomes">
+                				<field name="income_line">
+                					<tree editable="top">
+                						<field name="category"/>
+                						<field name="planned"/>
+                						<field name="actual"/>
+                						<field name="diff"/>
+                					</tree>
+                				</field>
+                			</page>
+                		</notebook>
+            		</sheet>
+        		</form>
+        	</field>
+    	</record>
+    	
+    	<record id="sequence_self_budgeting" model="ir.sequence">
+   			<field name="name">Budgeting Sequence</field>
+   			<field name="code">self.budget</field>
+   			<field name="active">TRUE</field>
+   			<field name="prefix">BDGT/%(year)s/%(month)s/</field>
+   			<field name="padding">5</field>
+   			<field name="number_next">1</field>
+   			<field name="number_increment">1</field>
+		</record>
+		
+		<menuitem name="Budgeting"
+    		id="budget_menu_root"
+    		action="budget_model_action"
+    		sequence="15"/>
+	</data>
+</odoo>

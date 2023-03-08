@@ -1,0 +1,4 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_adr_budgeting,access_adr_budgeting,model_adr_budgeting,base.group_user,1,1,1,1
+access_expense_line,access_expense_line,model_expense_line,base.group_user,1,1,1,0
+access_incomes_line,access_incomes_line,model_incomes_line,base.group_user,1,1,1,0
