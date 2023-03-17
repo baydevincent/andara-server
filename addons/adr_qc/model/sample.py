@@ -12,7 +12,7 @@ class ADRQualityControl(models.Model):
     _name = "adr.qc"
     _description = "Andara Monthly Budgeting"
                 
-    name = fields.Char(string='Document Code', readonly=True, required=True, copy=False, index=True, default=lambda self: _('New'))
+    name = fields.Char(string='Document Code', required=True, copy=False, index=True, default=lambda self: _('New'))
     code = fields.Char(string='Kode', default=lambda self: _('-'))
     no_bets = fields.Char(sting='Nomor Bets', default=lambda self: _('-'))
     expr_date = fields.Date(string='Tanggal Kadaluarsa', default=fields.Datetime.now)
