@@ -57,7 +57,7 @@
                     		<group>
                     			<field name="expr_date"/>
                     			<field name="sample_pick_date"/>	
-                    			<field name="score_value" invisible="1"/>	              	    	
+                    			<field name="score_value"/>	              	    	
                     		</group>
                 		</group>
                 		<notebook>
