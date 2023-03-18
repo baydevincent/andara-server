@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<record id="qc_model_ruah_tree" model="ir.ui.view">
+    		<field name="name">Andara QC Documentation</field>
+    		<field name="model">adr.qc.ruah</field>
+    		<field name="type">tree</field>
+    		<field name="arch" type="xml">
+        		<tree>
+            		<field name="name"/>
+            		<field name="state"/>
+        		</tree>
+    		</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="qc_model_ruah_action">
+        	<field name="name">QC Produk Ruahan</field>
+        	<field name="type">ir.actions.act_window</field>
+         	<field name="res_model">adr.qc.ruah</field>
+         	<field name="view_mode">tree,form</field>
+     	</record>
+	
+		<record id="qc_model_ruah_form_view" model="ir.ui.view">
+        	<field name="name">QC Produk Ruahan</field>
+        	<field name="model">adr.qc.ruah</field>
+        	<field name="type">form</field>
+        	<field name="arch" type="xml">
+        		<form>
+            		<header>
+                		<!-- tempatkan kode header seperti tombol dll disini 
+                		<button name="lock_budget" string="Lock Budget" type="object" invisible="1"/>
+                		<button name="confirm_budget" string="Confirm" type="object" attrs="{'invisible': [('state', 'in', ['|','confirmed','done'])]}"/>
+                		<button name="set_draft" string="Set to Draft" type="object" attrs="{'invisible': [('state', 'in', ['|','draft','done'])]}"/>
+                		<button name="unlock_budget" string="Unlock Budget" type="object" invisible="1"/>                		              
+                		-->
+
+                    	<field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancel"/>
+            		</header>       		
+            		<sheet>
+            		    <widget name="web_ribbon" title="DILULUSKAN"
+                                attrs="{'invisible': [('score_value', '!=', 'lulus')]}"/>
+                        <widget name="web_ribbon" title="DITOLAK"
+                        		bg_color="bg-danger"
+                                attrs="{'invisible': [('score_value', '!=', 'reject')]}"/>
+                			<!-- tempatkan kode yang berhubungan dengan input disini -->
+                		<div class="oe_title">
+                			<h1>
+                				<field name="name"/>
+                			</h1>
+                		</div>
+                 		<group>
+                    		<group>
+                        		<field name="product_desc" widget="product_template_many2one" options='{"always_reload": True}'/>
+                        		<field name="product_code"/>
+                        		<field name="no_bets"/>
+                    		</group>
+                    		<group>
+                    			<field name="production_date"/>
+                    			<field name="expr_date"/>
+                    			<field name="sample_pick_date"/>	
+                    			<field name="score_value"/>	              	    	
+                    		</group>
+                		</group>
+                		<notebook>
+                			<page string="Parameter">
+                				<group>
+                					<group>
+                						<field name="bentuk" widget="radio" options="{'horizontal': true}"/>
+                						<field name="warna" widget="radio" options="{'horizontal': true}"/>
+                						<field name="bau" widget="radio" options="{'horizontal': true}"/>
+                					</group>
+                					<group>
+                						<field name="kejernihan" widget="radio" options="{'horizontal': true}"/>
+                						<field name="homogeni" widget="radio" options="{'horizontal': true}"/>
+                					</group>
+                				</group>
+                			</page>
+                		</notebook>
+                		<field name="note"/>
+            		</sheet>
+        		</form>
+        	</field>
+    	</record>
+    	
+    	<record id="sequence_qc_documents_rh" model="ir.sequence">
+   			<field name="name">QC Docs Sequence</field>
+   			<field name="code">self.qc.docs.rh</field>
+   			<field name="active">TRUE</field>
+   			<field name="prefix">ADR-QC/RUAH/%(year)s/%(month)s/</field>
+   			<field name="padding">5</field>
+   			<field name="number_next">1</field>
+   			<field name="number_increment">1</field>
+		</record>
+		
+		<menuitem name="QC Documentation"
+    		id="budget_menu_root"
+    		sequence="15"/>
+    	
+    	<menuitem name="Produk Ruahan"
+    		id="qc_menu_ruah"
+    		action="qc_model_ruah_action"
+    		parent="budget_menu_root"
+    		sequence="2"/>
+	</data>
+</odoo>

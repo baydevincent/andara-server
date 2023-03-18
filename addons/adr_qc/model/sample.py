@@ -8,8 +8,8 @@ from odoo import api, fields, models, _
 # from odoo.exceptions import UserError,Warning
 
 
-class ADRQualityControl(models.Model):
-    _name = "adr.qc"
+class ADRBahanKemas(models.Model):
+    _name = "adr.qc.kemas"
     _description = "Andara Monthly Budgeting"
                 
     name = fields.Char(string='Document Code', required=True, copy=False, index=True, default=lambda self: _('New'))
@@ -48,12 +48,172 @@ class ADRQualityControl(models.Model):
     @api.model
     def create(self,vals):
         vals = vals
-        name = self.env['ir.sequence'].next_by_code('self.qc.docs')
+        name = self.env['ir.sequence'].next_by_code('self.qc.docs.kms')
         if vals['name'] == 'New':      
             vals.update({'name' : name})
-        result = super(ADRQualityControl, self).create(vals)
+        result = super(ADRBahanKemas, self).create(vals)
         return result
     
+class ADRProdukRuah(models.Model):
+    _name = "adr.qc.ruah"
+    _description = "Andara Monthly Budgeting"
+                
+    name = fields.Char(string='Document Code', required=True, copy=False, index=True, default=lambda self: _('New'))
+    product_code = fields.Char(string='Kode Product', default=lambda self: _('-'))
+    no_bets = fields.Char(sting='Nomor Bets', default=lambda self: _('-'))
+    production_date = fields.Date(string='Tanggal Produksi')
+    expr_date = fields.Date(string='Tanggal Kadaluarsa', default=fields.Datetime.now)
+    sample_pick_date = fields.Date(string='Tanggal pengambilan Sampel')
+    responsible_id = fields.Many2one('res.users', string='Responsible', states={'done': [('readonly', True)], 'confirmed': [('readonly', True)]})
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('confirmed', 'Confirmed'),
+        ('done', 'Done'),
+        ], string='Status', readonly=True, copy=False, index=True, tracking=3, default='draft')
+    incoming_prod = fields.Float(string='Barang Datang')
+    sample_qty  = fields.Float(string='Sample yang di ambil')
+    reject_qty = fields.Float(string='Sampel yang Reject')
+    score_value = fields.Selection(string='Hasil Pemeriksaan', selection=[('lulus', 'DILULUSKAN'),
+                                                                          ('reject', 'DITOLAK')])
+    bentuk = fields.Selection(string='Bentuk (Standar Cair)', selection=[('pass', 'Sesuai'),
+                                                      ('reject', 'Tidak Sesuai')])
+    warna = fields.Selection(string='Warna (Standar Bening)', selection=[('pass', 'Sesuai'),
+                                                      ('reject', 'Tidak Sesuai')])
+    bau = fields.Selection(string='Bau (Standar Khas)', selection=[('pass', 'Sesuai'),
+                                                      ('reject', 'Tidak Sesuai')])
+    kejernihan = fields.Selection(string='Kejernihan (Standar Jernih)', selection=[('pass', 'Sesuai'),
+                                                      ('reject', 'Tidak Sesuai')])
+    homogeni = fields.Selection(string='Homogenitas (Standar Homogen)', selection=[('pass', 'Sesuai'),
+                                                      ('reject', 'Tidak Sesuai')])
+    product_desc = fields.Many2one('product.template', string='Product')   
+    note = fields.Text('Keterangan')
+    
+    @api.model
+    def create(self,vals):
+        vals = vals
+        name = self.env['ir.sequence'].next_by_code('self.qc.docs.rh')
+        if vals['name'] == 'New':      
+            vals.update({'name' : name})
+        result = super(ADRProdukRuah, self).create(vals)
+        return result
+    
+class ADRBahanBaku(models.Model):
+    _name = "adr.qc.bb"
+    _description = "Andara Monthly Budgeting"
+                
+    name = fields.Char(string='Document Code', required=True, copy=False, index=True, default=lambda self: _('New'))
+    code = fields.Char(string='Kode', default=lambda self: _('-'))
+    no_bets = fields.Char(sting='Nomor Bets', default=lambda self: _('-'))
+    expr_date = fields.Date(string='Tanggal Kadaluarsa', default=fields.Datetime.now)
+    sample_pick_date = fields.Date(string='Tanggal pengambilan Sampel')
+    responsible_id = fields.Many2one('res.users', string='Responsible', states={'done': [('readonly', True)], 'confirmed': [('readonly', True)]})
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('confirmed', 'Confirmed'),
+        ('done', 'Done'),
+        ], string='Status', readonly=True, copy=False, index=True, tracking=3, default='draft')
+    incoming_prod = fields.Float(string='Barang Datang')
+    sample_qty  = fields.Float(string='Sample yang di ambil')
+    reject_qty = fields.Float(string='Sampel yang Reject')
+    score_value = fields.Selection(string='Hasil Pemeriksaan', selection=[('lulus', 'DILULUSKAN'),
+                                                                          ('reject', 'DITOLAK')])
+    cert_analisis = fields.Selection(string='Sertifikat Analisis', selection=[('pass', 'Sesuai'),
+                                                                             ('reject', 'Tidak Sesuai')])
+    cert_analisis_sample = fields.Selection(string='Sample', selection=[('1', '1'),
+                                                                        ('2', '2'),
+                                                                        ('3', '3'),
+                                                                        ('4', '4'),
+                                                                        ('5', '5'),
+                                                                        ('6', '6'),
+                                                                        ('7', '7'),
+                                                                        ('8', '8'),
+                                                                        ('9', '9'),
+                                                                        ('10', '10'),])
+    msds = fields.Selection(string='MSDS', selection=[('pass', 'Sesuai'),
+                                                      ('reject', 'Tidak Sesuai')])
+    msds_sample = fields.Selection(string='Sample', selection=[('1', '1'),
+                                                               ('2', '2'),
+                                                               ('3', '3'),
+                                                               ('4', '4'),
+                                                               ('5', '5'),
+                                                               ('6', '6'),
+                                                               ('7', '7'),
+                                                               ('8', '8'),
+                                                               ('9', '9'),
+                                                               ('10', '10'),])
+    ifra = fields.Selection(string='IFRA', selection=[('pass', 'Sesuai'),
+                                                      ('reject', 'Tidak Sesuai')])
+    ifra_sample = fields.Selection(string='Sample', selection=[('1', '1'),
+                                                               ('2', '2'),
+                                                               ('3', '3'),
+                                                               ('4', '4'),
+                                                               ('5', '5'),
+                                                               ('6', '6'),
+                                                               ('7', '7'),
+                                                               ('8', '8'),
+                                                               ('9', '9'),
+                                                               ('10', '10'),])
+    label = fields.Selection(string='Label', selection=[('pass', 'Sesuai'),
+                                                      ('reject', 'Tidak Sesuai')])
+    label_sample = fields.Selection(string='Sample', selection=[('1', '1'),
+                                                                ('2', '2'),
+                                                                ('3', '3'),
+                                                                ('4', '4'),
+                                                                ('5', '5'),
+                                                                ('6', '6'),
+                                                                ('7', '7'),
+                                                                ('8', '8'),
+                                                                ('9', '9'),
+                                                                ('10', '10'),])
+    kemasan = fields.Selection(string='Kemasan', selection=[('pass', 'Sesuai'),
+                                                      ('reject', 'Tidak Sesuai')])
+    kemasan_sample = fields.Selection(string='Sample', selection=[('1', '1'),
+                                                                        ('2', '2'),
+                                                                        ('3', '3'),
+                                                                        ('4', '4'),
+                                                                        ('5', '5'),
+                                                                        ('6', '6'),
+                                                                        ('7', '7'),
+                                                                        ('8', '8'),
+                                                                        ('9', '9'),
+                                                                        ('10', '10'),])
+    warna = fields.Selection(string='Warna', selection=[('pass', 'Sesuai'),
+                                                      ('reject', 'Tidak Sesuai')])
+    warna_sample = fields.Selection(string='Sample', selection=[('1', '1'),
+                                                                ('2', '2'),
+                                                                ('3', '3'),
+                                                                ('4', '4'),
+                                                                ('5', '5'),
+                                                                ('6', '6'),
+                                                                ('7', '7'),
+                                                                ('8', '8'),
+                                                                ('9', '9'),
+                                                                ('10', '10'),])
+    aroma = fields.Selection(string='Aroma', selection=[('pass', 'Sesuai'),
+                                                        ('reject', 'Tidak Sesuai')])
+    aroma_sample = fields.Selection(string='Sample', selection=[('1', '1'),
+                                                                ('2', '2'),
+                                                                ('3', '3'),
+                                                                ('4', '4'),
+                                                                ('5', '5'),
+                                                                ('6', '6'),
+                                                                ('7', '7'),
+                                                                ('8', '8'),
+                                                                ('9', '9'),
+                                                                ('10', '10'),])
+    product_desc = fields.Many2one('product.template', string='Product')
+    note = fields.Text(string='Note')
+
+    
+    
+    @api.model
+    def create(self,vals):
+        vals = vals
+        name = self.env['ir.sequence'].next_by_code('self.qc.docs.bb')
+        if vals['name'] == 'New':      
+            vals.update({'name' : name})
+        result = super(ADRBahanBaku, self).create(vals)
+        return result
 
                
 

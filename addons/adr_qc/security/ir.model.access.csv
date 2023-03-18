@@ -1,2 +1,4 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
-access_adr_qc,access_adr_qc,model_adr_qc,base.group_user,1,1,1,1
+access_adr_qc_kemas,access_adr_qc_kemas,model_adr_qc_kemas,base.group_user,1,1,1,1
+access_adr_qc_ruah,access_adr_qc_ruah,model_adr_qc_ruah,base.group_user,1,1,1,1
+access_adr_qc_bb,access_adr_qc_bb,model_adr_qc_bb,base.group_user,1,1,1,1

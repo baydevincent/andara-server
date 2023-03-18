@@ -1,28 +1,28 @@
 <?xml version="1.0"?>
 <odoo>
 	<data>
-		<record id="budget_model_tree" model="ir.ui.view">
+		<record id="qc_model_kemas_tree" model="ir.ui.view">
     		<field name="name">Andara QC Documentation</field>
-    		<field name="model">adr.qc</field>
+    		<field name="model">adr.qc.kemas</field>
     		<field name="type">tree</field>
     		<field name="arch" type="xml">
-        		<tree >
+        		<tree>
             		<field name="name"/>
             		<field name="state"/>
         		</tree>
     		</field>
 		</record>
 		
-		<record model="ir.actions.act_window" id="budget_model_action">
-        	<field name="name">QC Documents</field>
+		<record model="ir.actions.act_window" id="qc_model_kemas_action">
+        	<field name="name">QC Bahan Pengemas</field>
         	<field name="type">ir.actions.act_window</field>
-         	<field name="res_model">adr.qc</field>
+         	<field name="res_model">adr.qc.kemas</field>
          	<field name="view_mode">tree,form</field>
      	</record>
 	
-		<record id="budget_model_form_view" model="ir.ui.view">
-        	<field name="name">QC Documents</field>
-        	<field name="model">adr.qc</field>
+		<record id="ac_model_kemas_form_view" model="ir.ui.view">
+        	<field name="name">QC Bahan Pengemas</field>
+        	<field name="model">adr.qc.kemas</field>
         	<field name="type">form</field>
         	<field name="arch" type="xml">
         		<form>
@@ -97,11 +97,11 @@
         	</field>
     	</record>
     	
-    	<record id="sequence_qc_documents" model="ir.sequence">
+    	<record id="sequence_qc_documents_kms" model="ir.sequence">
    			<field name="name">QC Docs Sequence</field>
-   			<field name="code">self.qc.docs</field>
+   			<field name="code">self.qc.docs.kms</field>
    			<field name="active">TRUE</field>
-   			<field name="prefix">ADR-QC/%(year)s/%(month)s/</field>
+   			<field name="prefix">ADR-QC/KEMAS/%(year)s/%(month)s/</field>
    			<field name="padding">5</field>
    			<field name="number_next">1</field>
    			<field name="number_increment">1</field>
@@ -109,7 +109,13 @@
 		
 		<menuitem name="QC Documentation"
     		id="budget_menu_root"
-    		action="budget_model_action"
     		sequence="15"/>
+    		
+    	<menuitem name="Bahan Pengemas"
+    		id="qc_menu_pengemas"
+    		action="qc_model_kemas_action"
+    		parent="budget_menu_root"
+    		sequence="0"/>
+    	
 	</data>
 </odoo>
