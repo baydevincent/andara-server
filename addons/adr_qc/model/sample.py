@@ -214,6 +214,79 @@ class ADRBahanBaku(models.Model):
             vals.update({'name' : name})
         result = super(ADRBahanBaku, self).create(vals)
         return result
+    
+class ADRBahanJadi(models.Model):
+    _name = "adr.qc.bj"
+    _description = "Andara QC BJ"
+                
+    name = fields.Char(string='Document Code', required=True, copy=False, index=True, default=lambda self: _('New'))
+    code = fields.Char(string='Kode', default=lambda self: _('-'))
+    no_bets = fields.Char(sting='Nomor Bets', default=lambda self: _('-'))
+    expr_date = fields.Date(string='Tanggal Kadaluarsa', default=fields.Datetime.now)
+    sample_pick_date = fields.Date(string='Tanggal pengambilan Sampel')
+    responsible_id = fields.Many2one('res.users', string='Responsible', states={'done': [('readonly', True)], 'confirmed': [('readonly', True)]})
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('confirmed', 'Confirmed'),
+        ('done', 'Done'),
+        ], string='Status', readonly=True, copy=False, index=True, tracking=3, default='draft')
+    incoming_prod = fields.Float(string='Barang Datang')
+    sample_qty  = fields.Float(string='Sample yang di ambil')
+    reject_qty = fields.Float(string='Sampel yang Reject')
+    score_value = fields.Selection(string='Hasil Pemeriksaan', selection=[('lulus', 'DILULUSKAN'),
+                                                                          ('reject', 'DITOLAK')])
+    warna = fields.Selection(string='Warna Dasar', selection=[('pass', 'Sesuai'),
+                                                      ('reject', 'Tidak Sesuai')])
+    warna_text = fields.Selection(string='Warna Tulisan', selection=[('pass', 'Sesuai'),
+                                                      ('reject', 'Tidak Sesuai')])
+    logo = fields.Selection(string='Logo', selection=[('pass', 'Sesuai'),
+                                                      ('reject', 'Tidak Sesuai')])
+    jenis_bahan = fields.Selection(string='Jenis Bahan', selection=[('pass', 'Sesuai'),
+                                                                    ('reject', 'Tidak Sesuai')])
+    ukuran_dimensi = fields.Selection(string='Ukuran / Dimensi', selection=[('pass', 'Sesuai'),
+                                                                            ('reject', 'Tidak Sesuai')])
+    kosmetika_name = fields.Selection(string='Nama Kosmetika', selection=[('pass', 'Sesuai'),
+                                                                          ('reject', 'Tidak Sesuai')])
+    batch_number = fields.Selection(string='Nomor Batch', selection=[('pass', 'Sesuai'),
+                                                                     ('reject', 'Tidak Sesuai')])
+    production_country = fields.Selection(string='Nama & Negara Produsen', selection=[('pass', 'Sesuai'),
+                                                                                      ('reject', 'Tidak Sesuai')])
+    customer_address = fields.Selection(string='Nama & Alamat Pemohon', selection=[('pass', 'Sesuai'),
+                                                                                   ('reject', 'Tidak Sesuai')])
+    utility = fields.Selection(string='Kegunaan', selection=[('pass', 'Sesuai'),
+                                                             ('reject', 'Tidak Sesuai')])
+    user_guide = fields.Selection(string='Cara Penggunaan', selection=[('pass', 'Sesuai'),
+                                                                       ('reject', 'Tidak Sesuai')])
+    expiration_date = fields.Selection(string='Tanggal Kadaluarsa', selection=[('pass', 'Sesuai'),
+                                                                               ('reject', 'Tidak Sesuai')])
+    composition = fields.Selection(string='Komposisi', selection=[('pass', 'Sesuai'),
+                                                                  ('reject', 'Tidak Sesuai')])
+    warning_text = fields.Selection(string='Peringatan & Keterangan', selection=[('pass', 'Sesuai'),
+                                                                                 ('reject', 'Tidak Sesuai')])
+    save_condition = fields.Selection(string='Kondisi Penyimpanan', selection=[('pass', 'Sesuai'),
+                                                                               ('reject', 'Tidak Sesuai')])
+    product_desc = fields.Many2one('product.template', string='Product')
+    
+    incoming_prod = fields.Float(string='Barang Datang')
+    sample_qty  = fields.Float(string='Sample yang di ambil')
+    reject_qty = fields.Float(string='Sampel yang Reject')
+    
+    sampling_operator = fields.Char(string='Petugas Sampling')
+    mengetahui = fields.Char(string='Mengetahui')
+    pemeriksa = fields.Char(string='Petugas Pemeriksa')
+    
+    note = fields.Text(string='Note')
+
+    
+    
+    @api.model
+    def create(self,vals):
+        vals = vals
+        name = self.env['ir.sequence'].next_by_code('self.qc.docs.bj')
+        if vals['name'] == 'New':      
+            vals.update({'name' : name})
+        result = super(ADRBahanBaku, self).create(vals)
+        return result
 
                
 

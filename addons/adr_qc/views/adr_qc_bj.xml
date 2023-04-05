@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<record id="qc_model_bj_tree" model="ir.ui.view">
+    		<field name="name">Andara QC Documentation</field>
+    		<field name="model">adr.qc.bj</field>
+    		<field name="type">tree</field>
+    		<field name="arch" type="xml">
+        		<tree>
+            		<field name="name"/>
+            		<field name="sample_pick_date"/>
+            		<field name="state"/>
+        		</tree>
+    		</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="qc_model_bj_action">
+        	<field name="name">QC Bahan Jadi</field>
+        	<field name="type">ir.actions.act_window</field>
+         	<field name="res_model">adr.qc.bj</field>
+         	<field name="view_mode">tree,form</field>
+     	</record>
+	
+		<record id="qc_model_bj_form_view" model="ir.ui.view">
+        	<field name="name">QC Bahan Baku</field>
+        	<field name="model">adr.qc.bj</field>
+        	<field name="type">form</field>
+        	<field name="arch" type="xml">
+        		<form>
+            		<header>
+                		<!-- tempatkan kode header seperti tombol dll disini 
+                		<button name="lock_budget" string="Lock Budget" type="object" invisible="1"/>
+                		<button name="confirm_budget" string="Confirm" type="object" attrs="{'invisible': [('state', 'in', ['|','confirmed','done'])]}"/>
+                		<button name="set_draft" string="Set to Draft" type="object" attrs="{'invisible': [('state', 'in', ['|','draft','done'])]}"/>
+                		<button name="unlock_budget" string="Unlock Budget" type="object" invisible="1"/>                		              
+                		-->
+
+                    	<field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancel"/>
+            		</header>       		
+            		<sheet>
+            		    <widget name="web_ribbon" title="DILULUSKAN"
+                                attrs="{'invisible': [('score_value', '!=', 'lulus')]}"/>
+                        <widget name="web_ribbon" title="DITOLAK"
+                        		bg_color="bg-danger"
+                                attrs="{'invisible': [('score_value', '!=', 'reject')]}"/>
+                			<!-- tempatkan kode yang berhubungan dengan input disini -->
+                		<div class="oe_title">
+                			<h1>
+                				<field name="name"/>
+                			</h1>
+                		</div>
+                 		<group>
+                    		<group>
+                        		<field name="product_desc" widget="product_template_many2one" options='{"always_reload": True}'/>
+                        		<field name="code"/>
+                        		<field name="no_bets"/>
+                    		</group>
+                    		<group>
+                    			<field name="sample_pick_date"/>	
+                    			<field name="score_value"/>	              	    	
+                    		</group>
+                		</group>
+                		<notebook>
+                			<page string="Parameter">
+								<notebook>
+                					<page string="Summary">
+                						<group>
+                							<field name="warna" widget="radio" options="{'horizontal': true}"/> 
+                							<field name="warna_text" widget="radio" options="{'horizontal': true}"/> 
+                						</group>
+                						<group>
+                							<field name="logo" widget="radio" options="{'horizontal': true}"/> 
+                							<field name="jenis_bahan" widget="radio" options="{'horizontal': true}"/> 
+                							<field name="ukuran_dimensi" widget="radio" options="{'horizontal': true}"/> 
+                						</group>
+                					</page>
+                					<page string="Penandaan dan Informasi Kemasan">
+                						<group>
+                							<field name="kosmetika_name" widget="radio" options="{'horizontal': true}"/> 
+                							<field name="batch_number" widget="radio" options="{'horizontal': true}"/> 
+                							<field name="production_country" widget="radio" options="{'horizontal': true}"/> 
+                							<field name="customer_address" widget="radio" options="{'horizontal': true}"/>
+                							<field name="utility" widget="radio" options="{'horizontal': true}"/> 
+                						</group>
+                						<group>
+                							<field name="user_guide" widget="radio" options="{'horizontal': true}"/> 
+                							<field name="expiration_date" widget="radio" options="{'horizontal': true}"/> 
+                							<field name="composition" widget="radio" options="{'horizontal': true}"/> 
+                							<field name="warning_text" widget="radio" options="{'horizontal': true}"/>
+                							<field name="save_condition" widget="radio" options="{'horizontal': true}"/>
+                						</group>
+                					</page>
+                					<page string="Quantity Check">
+                						<group>
+                							<group>
+                								<field name="incoming_prod"/> 
+                								<field name="sample_qty"/> 
+                								<field name="reject_qty"/> 
+                							</group>
+                						</group>
+                					</page>
+                					<page string="Signature / Mengetahui">
+                						<group>
+                							<group>
+                								<field name="sampling_operator"/> 
+                								<field name="mengetahui"/> 
+                								<field name="pemeriksa"/> 
+                							</group>
+                						</group>
+                					</page>
+                				</notebook>              					              						     					           				
+                			</page>
+                			<field name='note'/>
+                		</notebook>
+            		</sheet>
+        		</form>
+        	</field>
+    	</record>
+    	
+    	<record id="sequence_qc_documents_bj" model="ir.sequence">
+   			<field name="name">QC Docs Sequence BJ</field>
+   			<field name="code">self.qc.docs.bj</field>
+   			<field name="active">TRUE</field>
+   			<field name="prefix">ADR-QC/BJ/%(year)s/%(month)s/</field>
+   			<field name="padding">5</field>
+   			<field name="number_next">1</field>
+   			<field name="number_increment">1</field>
+		</record>
+		
+		<menuitem name="QC Documentation"
+    		id="budget_menu_root"
+    		sequence="15"/>
+    	
+    	<menuitem name="Bahan Baku"
+    		id="qc_menu_bj"
+    		action="qc_model_bj_action"
+    		parent="budget_menu_root"
+    		sequence="1"/>
+    	
+	</data>
+</odoo>

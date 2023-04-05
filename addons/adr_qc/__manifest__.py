@@ -16,6 +16,7 @@
         'security/ir.model.access.csv',
         'views/adr_qc_bp.xml',
         'views/adr_qc_bb.xml',
+        'views/adr_qc_bj.xml',
         'views/adr_qc_ruahan.xml',
     ],
     'demo': [
