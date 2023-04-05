@@ -285,7 +285,7 @@ class ADRBahanJadi(models.Model):
         name = self.env['ir.sequence'].next_by_code('self.qc.docs.bj')
         if vals['name'] == 'New':      
             vals.update({'name' : name})
-        result = super(ADRBahanBaku, self).create(vals)
+        result = super(ADRBahanJadi, self).create(vals)
         return result
 
                
