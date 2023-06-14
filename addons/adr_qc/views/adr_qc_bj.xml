@@ -15,14 +15,14 @@
 		</record>
 		
 		<record model="ir.actions.act_window" id="qc_model_bj_action">
-        	<field name="name">QC Bahan Jadi</field>
+        	<field name="name">QC Produk Jadi</field>
         	<field name="type">ir.actions.act_window</field>
          	<field name="res_model">adr.qc.bj</field>
          	<field name="view_mode">tree,form</field>
      	</record>
 	
 		<record id="qc_model_bj_form_view" model="ir.ui.view">
-        	<field name="name">QC Bahan Baku</field>
+        	<field name="name">QC Produk Jadi</field>
         	<field name="model">adr.qc.bj</field>
         	<field name="type">form</field>
         	<field name="arch" type="xml">
