@@ -131,7 +131,7 @@
     		id="budget_menu_root"
     		sequence="15"/>
     	
-    	<menuitem name="Bahan Jadi"
+    	<menuitem name="Produk Jadi"
     		id="qc_menu_bj"
     		action="qc_model_bj_action"
     		parent="budget_menu_root"
