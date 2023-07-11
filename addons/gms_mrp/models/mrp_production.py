@@ -10,6 +10,7 @@ class MrpProduction(models.Model):
     _inherit = ['mrp.production']
     
     batch_code = fields.Char(string="Batch Code", default=1)
+    operator_name = fields.Char(string="Operator")
     
     def _get_backorder_mo_vals(self):
         
