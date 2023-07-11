@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mrp_production_wo_adr_inherit" model="ir.ui.view">
+            <field name="name">mrp.production.wo.adr.inherit</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_editable_view"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='date_planned_start']" position="after">
+                	<field name="operator_name"/>
+            	</xpath>            
+            </field>
+        </record>
+    </data>
+</odoo>

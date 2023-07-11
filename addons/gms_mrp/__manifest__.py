@@ -16,6 +16,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/mrp_production_gms_inherit.xml',
+        'views/mrp_workorder_tree_adr_inherit.xml',
     ],
     'demo': [
     ],
