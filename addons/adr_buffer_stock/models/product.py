@@ -31,7 +31,7 @@ class Product(models.Model):
             """ %(header_label_list[0], header_label_list[1], header_label_list[2], header_label_list[3], header_label_list[4])
             ## Check for low stock products
             product_obj  = self.env['product.product']
-            product_ids  = product_obj.search([('active', '=', True), ('sale_ok', '=', True), ('default_code', '!=', False)])
+            product_ids  = product_obj.search([('active', '=', True)])
             for product in product_ids:
                 product_sku = product.default_code
                 if not product_sku or product_sku == '':
