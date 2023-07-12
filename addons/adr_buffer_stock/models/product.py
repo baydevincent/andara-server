@@ -34,8 +34,8 @@ class Product(models.Model):
             product_ids  = product_obj.search([('active', '=', True)])
             for product in product_ids:
                 product_sku = product.default_code
-                if not product_sku or product_sku == '':
-                    continue
+                # if not product_sku or product_sku == '':
+                    # continue
                 qty_available = product.qty_available
                 qty_incoming  = product.incoming_qty
                 qty_low_stock_notify = product.qty_low_stock_notify
