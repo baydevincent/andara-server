@@ -67,10 +67,10 @@ class Product(models.Model):
             vals = {
                     'subject': 'Andara Low Stock',
                     'body_html': template.body_html,
-                    'email_to': 'baydevincent@gmail.com',
+                    'email_to': 'andaracantikaindonesia@gmail.com',
                     'email_cc': '',
                     'auto_delete': False,
-                    'email_from': 'baydevincent@gmail.com',
+                    'email_from': 'andaracantikaindonesia@gmail.com',
                     }
             mail_id = self.env['mail.mail'].sudo().create(vals)
             mail_id.sudo().send()
