@@ -248,10 +248,11 @@ class Report:
         parameters = {
             'STANDARD_DIR': self.report.standard_directory(),
             'REPORT_LOCALE': locale,
-            'IDS': self.ids,
+            # 'IDS': self.ids,
         }
+
         if 'parameters' in self.data:
-            parameters.update(json.loads(self.data.get('parameters')))
+            parameters.update(self.data.get('parameters'))
         server = JasperServer(int(tools.config['jasperport']))
         company_rec = self.env['res.users'].browse(self.uid).company_id
         server.javapath = company_rec and company_rec.java_path or ''
