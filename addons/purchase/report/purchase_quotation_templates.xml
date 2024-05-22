@@ -57,6 +57,41 @@
 
             <div class="oe_structure"/>
         </div>
+        <style>
+		    .ttd-container {
+		        text-align: right; /* Aligns the container to the right */
+		    }
+		
+		    .box {
+		        width: 200px;
+		        height: 150px;
+		        background-color: #f0f0f0;
+		        border: 1px solid #333;
+		        padding: 20px;
+		        margin: 20px;
+		        text-align: center; /* Centers text horizontally */
+		        display: inline-block; /* Displays boxes inline */
+		    }
+		
+		    .box h2 {
+		        margin-top: 0;
+		        font-size: 18px;
+		        color: #333;
+		    }
+		
+		    .box p {
+		        color: #666;
+		    }
+		</style>
+		
+		<div class="ttd-container">
+		    <div class="box">
+		        <h2>Mengetahui</h2>
+		    </div>
+		    <div class="box">
+		        <h2>Dibuat Oleh</h2>
+		    </div>
+		</div>
     </t>
 </template>
 
